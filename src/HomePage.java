@@ -17,6 +17,7 @@ public class HomePage implements ActionListener{
         accessButton.addActionListener(this);
 
         leaveAMessageButton.setBounds(130, 200, 140, 50);
+        leaveAMessageButton.addActionListener(this);
 
         userRegisterButton.setBounds(130,270,140,50);
         userRegisterButton.addActionListener(this);
@@ -38,6 +39,10 @@ public class HomePage implements ActionListener{
         if(e.getSource() == accessButton) {
             frame.dispose();
             AccessPage accessPage = new AccessPage();
+        }
+        else if(e.getSource() == leaveAMessageButton) {
+            frame.dispose();
+            MessageRegisterPage messageRegisterPage = new MessageRegisterPage();
         }
         else if(e.getSource() == userRegisterButton) {
             frame.dispose();
