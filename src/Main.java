@@ -1,16 +1,13 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Main {
-
-
     public static void main(String[] args) throws NoSuchAlgorithmException {
-
-
-        String deneme = getHash("DENEMEEEEEE");
-        System.out.println(deneme);
-
+        HomePage homePage = new HomePage();
     }
 
 
