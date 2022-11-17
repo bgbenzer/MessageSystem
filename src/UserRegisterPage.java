@@ -9,10 +9,14 @@ public class UserRegisterPage implements ActionListener {
     JTextField usernameField = new JTextField();
 
     JLabel password = new JLabel("Password");
-    JTextField passwordField = new JTextField();
+    JPasswordField passwordField = new JPasswordField();
+
+    JCheckBox showPassword = new JCheckBox("Show Password");
 
     JLabel confirmPassword = new JLabel("Confirm Password");
-    JTextField confirmPasswordField = new JTextField();
+    JPasswordField confirmPasswordField = new JPasswordField();
+
+    JCheckBox checkShowPassword = new JCheckBox("Show Password");
 
     JButton register = new JButton("Register");
 
@@ -24,14 +28,40 @@ public class UserRegisterPage implements ActionListener {
 
         password.setBounds(30,90,150,30);
         passwordField.setBounds(190,90,150,30);
+        showPassword.setBounds(190, 115, 150,30);
 
-        confirmPassword.setBounds(30,140,150,30);
-        confirmPasswordField.setBounds(190,140,150,30);
+        confirmPassword.setBounds(30,165,150,30);
+        confirmPasswordField.setBounds(190,165,150,30);
+        checkShowPassword.setBounds(190,190,150,30);
 
-        register.setBounds(150, 200, 100, 30);
+        showPassword.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(showPassword.isSelected()) {
+                    passwordField.setEchoChar((char) 0);
+                }
+                else if(!showPassword.isSelected()){
+                    passwordField.setEchoChar('•');
+                }
+            }
+        });
+
+        checkShowPassword.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(checkShowPassword.isSelected()) {
+                    confirmPasswordField.setEchoChar((char) 0);
+                }
+                else if(!checkShowPassword.isSelected()){
+                    confirmPasswordField.setEchoChar('•');
+                }
+            }
+        });
+
+        register.setBounds(150, 250, 100, 30);
         register.addActionListener(this);
 
-        homePageButton.setBounds(150, 250, 100, 30);
+        homePageButton.setBounds(150, 300, 100, 30);
         homePageButton.addActionListener(this);
 
         frame.add(username);
@@ -39,9 +69,11 @@ public class UserRegisterPage implements ActionListener {
 
         frame.add(password);
         frame.add(passwordField);
+        frame.add(showPassword);
 
         frame.add(confirmPassword);
         frame.add(confirmPasswordField);
+        frame.add(checkShowPassword);
 
         frame.add(register);
         frame.add(homePageButton);
