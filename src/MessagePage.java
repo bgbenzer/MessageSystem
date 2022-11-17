@@ -1,12 +1,14 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MessagePage implements ActionListener {
     JFrame frame = new JFrame("Message");
 
-    JTextArea messageArea = new JTextArea();
-    JScrollPane messageScroll = new JScrollPane();
+    JTextArea messageArea = new JTextArea(10,10);
+
 
 
     JButton returnBtn = new JButton("Return");
@@ -14,17 +16,14 @@ public class MessagePage implements ActionListener {
 
     MessagePage(){
         messageArea.setBounds(25,25,335,270);
-
-        messageScroll.setViewportView(messageArea);
-
-        messageScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        messageArea.setLineWrap(true);
+        messageArea.setWrapStyleWord(true);
 
         returnBtn.setBounds(130,310,140,30);
 
         returnBtn.addActionListener(this);
 
         frame.add(messageArea);
-        frame.add(messageScroll);
         frame.add(returnBtn);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
