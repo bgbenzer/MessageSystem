@@ -1,24 +1,25 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MessagePage implements ActionListener {
     JFrame frame = new JFrame("Message");
 
-    JTextArea messageArea = new JTextArea();
+    JTextArea messageArea = new JTextArea(10,10);
+
 
 
     JButton returnBtn = new JButton("Return");
 
 
     MessagePage(){
-        messageArea.setBounds(50,50,250,250);
+        messageArea.setBounds(25,25,335,270);
+        messageArea.setLineWrap(true);
+        messageArea.setWrapStyleWord(true);
 
-        JScrollPane messageScroll = new JScrollPane(messageArea);
-        messageScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        messageScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-        returnBtn.setBounds(130,330,140,30);
+        returnBtn.setBounds(130,310,140,30);
 
         returnBtn.addActionListener(this);
 

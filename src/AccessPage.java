@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,7 +16,7 @@ public class AccessPage implements ActionListener {
     JTextField usernameField = new JTextField();
 
     JLabel password = new JLabel("Password");
-    JTextField passwordField = new JTextField();
+    JPasswordField passwordField = new JPasswordField();
     JCheckBox showPassword = new JCheckBox("Show Password");
 
     JButton view = new JButton("View");
@@ -37,12 +38,24 @@ public class AccessPage implements ActionListener {
         passwordField.setBounds(190,170,150,30);
         showPassword.setBounds(190,220,150,30);
 
+        showPassword.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(showPassword.isSelected()) {
+                    passwordField.setEchoChar((char) 0);
+                }
+                else if(!showPassword.isSelected()){
+                    passwordField.setEchoChar('•');
+                }
+            }
+        });
+
         view.setBounds(50,270,100,30);
         reset.setBounds(250,270,100,30);
         home.setBounds(150,320,100,30);
 
         view.addActionListener(this);
-
+        reset.addActionListener(this);
         home.addActionListener(this);
 
         frame.add(messageCodename);
@@ -77,6 +90,12 @@ public class AccessPage implements ActionListener {
         else if(e.getSource() == view) {
             frame.dispose();
             MessagePage messagePage = new MessagePage();
+        }
+        else if(e.getSource() == reset){
+            msgCodenameField.setText("");
+            mgsPasswordField.setText("");
+            usernameField.setText("");
+            passwordField.setText("");
         }
     }
 }
