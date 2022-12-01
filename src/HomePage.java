@@ -1,6 +1,18 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class HomePage implements ActionListener{
     JFrame frame = new JFrame("Main Page");
@@ -11,7 +23,8 @@ public class HomePage implements ActionListener{
     JButton userRegisterButton = new JButton("User Register");
 
     HomePage(){
-        mainText.setBounds(50,20,200,50);
+        mainText.setBounds(50,20,300,50);
+        mainText.setFont(new Font("Arial", Font.BOLD, 23));
         accessButton.setBounds(150,150,100,30);
 
         accessButton.addActionListener(this);
@@ -42,7 +55,42 @@ public class HomePage implements ActionListener{
         }
         else if(e.getSource() == leaveAMessageButton) {
             frame.dispose();
-            MessageRegisterPage messageRegisterPage = new MessageRegisterPage();
+            try {
+
+                byte[] jsonString = FileOps.readAsByte("users.txt");
+                DES des = new DES(jsonString,"KEY");
+                byte[] decryptString = des.decrypt("DES");
+                String string = new String(decryptString);
+
+                JSONParser jsonParser = new JSONParser();
+
+                Object object2 = jsonParser.parse(string);
+                JSONObject jsonObject = (JSONObject) object2;
+
+                Object object = jsonObject.get("Users");
+                JSONArray userArray = (JSONArray) object;
+                String[] users = new String[userArray.size()];
+
+                Iterator<JSONObject> iterator = userArray.iterator();
+                int counter =0;
+                while(iterator.hasNext()){
+                   users[counter] = (String) iterator.next().get("Username");
+                   counter++;
+                }
+
+
+                MessageRegisterPage messageRegisterPage = new MessageRegisterPage(users);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+                noSuchAlgorithmException.printStackTrace();
+            } catch (InvalidKeySpecException invalidKeySpecException) {
+                invalidKeySpecException.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         else if(e.getSource() == userRegisterButton) {
             frame.dispose();

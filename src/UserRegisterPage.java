@@ -1,6 +1,10 @@
+import org.json.simple.parser.ParseException;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 public class UserRegisterPage implements ActionListener {
     JFrame frame = new JFrame("User Register");
@@ -87,7 +91,31 @@ public class UserRegisterPage implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == register) {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            String confirmPassword = confirmPasswordField.getText();
 
+            try {
+                String string = User.register(username,password,confirmPassword);
+                if(string.equals("true")) {
+                    frame.dispose();
+                    HomePage homePage = new HomePage();
+                }else{
+                    frame.dispose();
+                    ErrorPage errorPage = new ErrorPage(string);
+                }
+
+
+
+            } catch (NoSuchAlgorithmException ex) {
+                ex.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         else if(e.getSource() == homePageButton) {
             frame.dispose();

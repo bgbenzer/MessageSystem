@@ -1,12 +1,15 @@
+import org.json.simple.parser.ParseException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 
 public class MessageRegisterPage implements ActionListener {
     JFrame frame = new JFrame("Register Form");
 
     JLabel authUsername = new JLabel("Auth. Username*");
-    JComboBox authUsernameField = new JComboBox();
+    JComboBox authUsernameField ;
 
     JLabel messagePassword = new JLabel("Password*");
     JTextField messagePasswordField = new JTextField();
@@ -25,7 +28,10 @@ public class MessageRegisterPage implements ActionListener {
     JButton homePageButton = new JButton("Home");
 
 
-    MessageRegisterPage() {
+    MessageRegisterPage(String[] users) throws IOException, ParseException {
+
+        authUsernameField = new JComboBox(users);
+
         authUsername.setBounds(30,50,100,30);
         authUsernameField.setBounds(200,50,100,30);
 
@@ -40,6 +46,8 @@ public class MessageRegisterPage implements ActionListener {
 
         enterMessage.setBounds(30, 230, 150,30);
         message.setBounds(200, 200, 300,200);
+        message.setLineWrap(true);
+        message.setWrapStyleWord(true);
 
         createMessageButton.setBounds(75,450, 150,30);
         createMessageButton.addActionListener(this);
@@ -74,6 +82,28 @@ public class MessageRegisterPage implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == createMessageButton) {
+
+            try {
+                String messageId = messageCodenameField.getText();
+                String content = message.getText();
+                String password = messagePasswordField.getText();
+                String confirmPassword = messageConfirmField.getText();
+                String receiver = String.valueOf(authUsernameField.getSelectedItem());
+
+                String string = Message.createMessage(messageId, content.getBytes(), password,receiver, confirmPassword);
+                if(string.equals("true")){
+                    frame.dispose();
+                    HomePage homePage = new HomePage();
+                }else{
+                    frame.dispose();
+                    ErrorPage errorPage = new ErrorPage(string);
+                }
+
+
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 
         }
         else if (e.getSource() == homePageButton) {

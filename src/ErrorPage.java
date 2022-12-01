@@ -1,29 +1,22 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MessagePage implements ActionListener {
-    JFrame frame = new JFrame("Message");
+public class ErrorPage implements ActionListener {
+    JFrame frame = new JFrame("Register Form");
 
-    JTextArea messageArea = new JTextArea(10,10);
+    JLabel mainText;
 
     JButton returnBtn = new JButton("Return");
 
-
-    MessagePage(String content){
-        messageArea.setBounds(25,25,335,270);
-        messageArea.setEditable(false);
-        messageArea.setLineWrap(true);
-        messageArea.setWrapStyleWord(true);
-        messageArea.setText(content);
+    ErrorPage(String errorContent){
+        mainText = new JLabel(errorContent);
+        mainText.setBounds(50,20,300,200);
 
         returnBtn.setBounds(130,310,140,30);
-
         returnBtn.addActionListener(this);
 
-        frame.add(messageArea);
+        frame.add(mainText);
         frame.add(returnBtn);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,7 +1,11 @@
+import org.json.simple.parser.ParseException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 public class AccessPage implements ActionListener {
     JFrame frame = new JFrame("Message View");
@@ -10,7 +14,7 @@ public class AccessPage implements ActionListener {
     JTextField msgCodenameField = new JTextField();
 
     JLabel messagePassword = new JLabel("Message Password");
-    JTextField mgsPasswordField = new JTextField();
+    JTextField msgPasswordField = new JTextField();
 
     JLabel username = new JLabel("Username");
     JTextField usernameField = new JTextField();
@@ -29,7 +33,7 @@ public class AccessPage implements ActionListener {
         msgCodenameField.setBounds(190,20,150,30);
 
         messagePassword.setBounds(30,70,150,30);
-        mgsPasswordField.setBounds(190,70,150,30);
+        msgPasswordField.setBounds(190,70,150,30);
 
         username.setBounds(30,120,150,30);
         usernameField.setBounds(190,120,150,30);
@@ -62,7 +66,7 @@ public class AccessPage implements ActionListener {
         frame.add(msgCodenameField);
 
         frame.add(messagePassword);
-        frame.add(mgsPasswordField);
+        frame.add(msgPasswordField);
 
         frame.add(username);
         frame.add(usernameField);
@@ -89,11 +93,40 @@ public class AccessPage implements ActionListener {
         }
         else if(e.getSource() == view) {
             frame.dispose();
-            MessagePage messagePage = new MessagePage();
+
+            String messageId = msgCodenameField.getText();
+            String messagePassword = msgPasswordField.getText();
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+
+            try {
+
+                String content = (String) Message.readMessage(messageId, messagePassword, username, password);
+                if(!content.equals("Please check your information and try again")){
+                    MessagePage messagePage = new MessagePage(content);
+                }else{
+                    frame.dispose();
+                    ErrorPage errorPage = new ErrorPage(content);
+                }
+
+
+
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            } catch (NoSuchAlgorithmException ex) {
+                ex.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+
         }
         else if(e.getSource() == reset){
             msgCodenameField.setText("");
-            mgsPasswordField.setText("");
+            msgPasswordField.setText("");
             usernameField.setText("");
             passwordField.setText("");
         }
